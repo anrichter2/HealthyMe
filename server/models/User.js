@@ -14,16 +14,30 @@ const userSchema = new Schema({
     unique: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
+  weight: {
+    type: Number,
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: true,
+  },
   password: {
     type: String,
     required: true,
     minlength: 5,
   },
-  thoughts: [
+  workouts: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Thought',
+      ref: 'Fitness',
     },
+  ],
+  foodIntake: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Nutrition',
+    }
   ],
 });
 
