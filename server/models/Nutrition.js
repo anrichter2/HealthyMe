@@ -1,32 +1,30 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const exerciseSchema = new Schema({
-  exerciseType: {
+const foodSchema = new Schema({
+  foodName: {
     type: String,
     required: true,
     minlength: 1,
     maxlength: 280,
     trim: true,
   },
-  exerciseDuration: {
+  calories: {
     type: Number,
     required: true,
+    trim: true,
   },
   date: {
     type: Date,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
-  caloriesBurned: {
-    type: Number,
-  },
 });
 
-ExerciseSchema.virtual('Fitness').get(function() {
-  return this.caloriesBurned; // FIX THIS 
+foodSchema.virtual('Nutrition').get(function() {
+  return this.calories; // FIX THIS
 });
 
-const Exercise = model('Exercise', exerciseSchema);
+const Nutrition = model('Nutrition', foodSchema);
 
-module.exports = Exercise;
+module.exports = Nutrition;
