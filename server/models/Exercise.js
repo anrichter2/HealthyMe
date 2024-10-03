@@ -13,7 +13,7 @@ const exerciseSchema = new Schema({
     type: Number,
     required: true,
   },
-  date: {
+  exerciseDate: {
     type: Date,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
@@ -23,8 +23,14 @@ const exerciseSchema = new Schema({
   },
 });
 
+// FIX THIS TO DISPLAY EXERCISE ARRAY AND TOTAL CALORIES BURNED
 ExerciseSchema.virtual('Fitness').get(function() {
-  return this.caloriesBurned; // FIX THIS 
+  return {
+    exerciseType: this.exerciseType,
+    exerciseDuration: this.exerciseDuration,
+    caloriesBurned: this.caloriesBurned,
+    exerciseDate: this.exerciseDate,
+  }
 });
 
 const Exercise = model('Exercise', exerciseSchema);
