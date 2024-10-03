@@ -2,51 +2,72 @@
   {
     "username": "Brian Kernighan",
     "email": "bkernighan@techfriends.dev",
-    "password": "password01"
+    "password": "password01",
+    "weight": 100,
+    "height": 165
+    
   },
   {
     "username": "Max Kanat-Alexander",
     "email": "mkanatalexander@techfriends.dev",
-    "password": "password02"
+    "password": "password02",
+    "weight": 205,
+    "height": 175
   },
   {
     "username": "Why The Lucky Stiff",
     "email": "wtls@techfriends.dev",
-    "password": "password03"
+    "password": "password03",
+    "weight": 150,
+    "height": 167
   },
   {
     "username": "Kent Beck",
     "email": "kbeck@techfriends.dev",
-    "password": "password04"
+    "password": "password04",
+    "weight": 180,
+    "height": 155
   },
   {
     "username": "Edward V. Berard",
     "email": "evberard@techfriends.dev",
-    "password": "password05"
+    "password": "password05",
+    "weight": 166,
+    "height": 164
   },
   {
     "username": "Alan Kay",
     "email": "akay@techfriends.dev",
-    "password": "password06"
+    "password": "password06",
+    "weight": 100,
+    "height": 150
   },
   {
     "username": "C.A.R. Hoare",
     "email": "choare@techfriends.dev",
-    "password": "password07"
+    "password": "password07",
+    "weight": 100,
+    "height": 145
   },
   {
     "username": "David Thomas",
     "email": "dthomas@techfriends.dev",
-    "password": "password08"
+    "password": "password08",
+    "weight": 90,
+    "height": 150
   },
   {
     "username": "Donald Knuth",
     "email": "dknuth@techfriends.dev",
-    "password": "password09"
+    "password": "password09",
+    "weight": 184,
+    "height": 159
   },
   {
     "username": "Lernantino",
     "email": "lernantino@techfriends.dev",
-    "password": "password10"
+    "password": "password10",
+    "weight": 120,
+    "height": 165
   }
 ]
