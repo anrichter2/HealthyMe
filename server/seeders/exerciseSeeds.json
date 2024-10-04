@@ -1,0 +1,46 @@
+
+[ 
+  {
+    "exerciseType": "Leg",
+    "execiseDuration": 30,
+    "exerciseDate":  "",
+    "caloriesBurned": 100
+  },
+  {
+    "exerciseType": "Arm",
+    "execiseDuration": 45,
+    "exerciseDate":  "",
+    "caloriesBurned": 65
+  },
+  {
+    "exerciseType": "Glutes",
+    "execiseDuration": 20,
+    "exerciseDate":  "",
+    "caloriesBurned": 50
+  },
+  {
+    "exerciseType": "Calves",
+    "execiseDuration": 35,
+    "exerciseDate":  "",
+    "caloriesBurned": 130
+  },
+  {
+    "exerciseType": "Back",
+    "execiseDuration": 39,
+    "exerciseDate":  "",
+    "caloriesBurned": 100
+  },
+  {
+    "exerciseType": "Leg",
+    "execiseDuration": 50,
+    "exerciseDate":  "",
+    "caloriesBurned": 200
+  },
+  {
+    "exerciseType": "Arm",
+    "execiseDuration": 24,
+    "exerciseDate":  "",
+    "caloriesBurned": 50
+  }
+ 
+]
