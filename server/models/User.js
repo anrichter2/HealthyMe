@@ -14,18 +14,18 @@ const userSchema = new Schema({
     unique: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
-  weight: {
-    type: Number,
-    required: true,
-  },
-  height: {
-    type: Number,
-    required: true,
-  },
   password: {
     type: String,
     required: true,
     minlength: 5,
+  },
+  weight: {
+    type: Number,
+    // required: true,
+  },
+  height: {
+    type: Number,
+    // required: true,
   },
   workouts: [
     {
