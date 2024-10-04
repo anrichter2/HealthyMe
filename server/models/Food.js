@@ -6,23 +6,29 @@ const foodSchema = new Schema({
     type: String,
     required: true,
     minlength: 1,
+    
     maxlength: 280,
     trim: true,
   },
   calories: {
     type: Number,
-    required: true,
+    required: true
     trim: true,
   },
-  date: {
+  intakeDate: {
     type: Date,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
+  
 });
 
-foodSchema.virtual('Nutrition').get(function() {
-  return this.calories; // FIX THIS
+// FIX THIS TO CALCULATE THE TOTAL INTAKE CALORIES AND FOOD ARRAY
+foodSchema.virtual('Nutrition').get(function() { 
+  return {
+    calories: this.calories,
+    intakeDate: this.intakeDate,
+  }
 });
 
 const Food = model('Food', foodSchema);
