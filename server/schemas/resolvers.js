@@ -1,4 +1,4 @@
-const { User, Fitness, Excercise, Nutrition, Food } = require('../models');
+const { User, Fitness, Exercise, Nutrition, Food } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -40,9 +40,9 @@ const resolvers = {
 
       return { token, user };
     },
-    addFitness: async (parent, { excerciseName, excerciseType, excerciseDuration, caloriesBurned }, context) => {
+    addFitness: async (parent, { exerciseName, exerciseType, exerciseDuration, caloriesBurned }, context) => {
       if (context.user) {
-      const fitness = await Fitness.create({ excerciseName, excerciseType, excerciseDuration, caloriesBurned })
+      const fitness = await Fitness.create({ exerciseName, exerciseType, exerciseDuration, caloriesBurned })
 
       return fitness;
     }
@@ -56,16 +56,16 @@ const resolvers = {
     }
     throw AuthenticationError;
   },
-  addExcercise: async (parent, { fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned }, context) => {
+  addExercise: async (parent, { fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned }, context) => {
     if (context.user) {
-      const excercise = await Excercise.create({ fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned });
+      const exercise = await Exercise.create({ fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned });
       
       await User.findOneAndUpdate(
         { _id: context.user._id },
-        { $addToSet: { excercise: excercise._id } }
+        { $addToSet: { exercise: exercise._id } }
       );
       
-      return excercise;
+      return exercise;
     }
     throw AuthenticationError;
   },
@@ -82,15 +82,15 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    removeExcercise: async (parent, { fitnessId, excerciseId }, context) => {
-      const excercise = await Excercise.findOneAndDelete({ fitnessId, excerciseId })
+    removeExercise: async (parent, { fitnessId, exerciseId }, context) => {
+      const exercise = await Exercise.findOneAndDelete({ fitnessId, exerciseId })
 
       await User.findOneAndUpdate(
         { _id: context.user._id },
-        { $pull: { excercise: excercise._id } }
+        { $pull: { exercise: exercise._id } }
       );
 
-      return excercise
+      return exercise
     },
     removeFood: async (parent, { nutritionId, foodId }, context) => {
       const food = await Food.findOneAndDelete({ nutritionId, foodId })

@@ -12,7 +12,7 @@ const foodSchema = new Schema({
   },
   calories: {
     type: Number,
-    required: true
+    required: true,
     trim: true,
   },
   intakeDate: {
