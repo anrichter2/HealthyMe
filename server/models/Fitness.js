@@ -33,6 +33,6 @@ ExerciseSchema.virtual('Fitness').get(function() {
   }
 });
 
-const Exercise = model('Exercise', exerciseSchema);
+const Fitness = model('Fitness', exerciseSchema);
 
-module.exports = Exercise;
+module.exports = Fitness;

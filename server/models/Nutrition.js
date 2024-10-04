@@ -31,6 +31,6 @@ foodSchema.virtual('Nutrition').get(function() {
   }
 });
 
-const Food = model('Food', foodSchema);
+const Nutrition = model('Nutrition', foodSchema);
 
-module.exports = Food;
+module.exports = Nutrition;

@@ -1,5 +1,5 @@
 const User = require('./User');
-const Exercise = require('./Exercise');
-const Food = require('./Food');
+const Fitness = require('./Fitness');
+const Nutrition = require('./Nutrition');
 
-module.exports = { User, Exercise, Food };
+module.exports = { User, Fitness, Nutrition };
