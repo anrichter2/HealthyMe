@@ -9,20 +9,22 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const Profile = () => {
-  const { username: userParam } = useParams();
+  // const { username: userParam } = useParams();
 
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-    variables: { username: userParam },
-  });
+  // const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  //   variables: { username: userParam },
+  // });
 
-  const user = data?.me || data?.user || {};
-  if (
-    Auth.loggedIn() && 
-    /* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username, and compare it to the userParam variable */
-    Auth.getProfile().authenticatedPerson.username === userParam
-  ) {
-    return <Navigate to="/me" />;
-  }
+  const { loading, data } = useQuery(QUERY_ME)
+
+  const user = data?.me || {};
+  // if (
+  //   Auth.loggedIn() && 
+  //   /* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username, and compare it to the userParam variable */
+  //   Auth.getProfile().authenticatedPerson.username === userParam
+  // ) {
+  //   return <Navigate to="/me" />;
+  // }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -39,7 +41,33 @@ const Profile = () => {
 
   return (
     <div>
-      <div className="flex-row justify-center mb-3">
+      <h2>
+        This is {`${user.usernames}`} Profile Page
+      </h2>
+      <div>
+        <LineGraph />
+        <LineGraph />
+      </div>
+      <div>
+        <FitnessForm />
+        <FoodForm />
+      </div>
+      <div>
+        <div>
+          <div>
+            <FitnessList workouts={user.workouts} />
+            <div>
+              {workouts.map((workout) => (
+                <div key={workout._id} className='card'></div>
+              ))}
+              <h3>
+                Data from {`${user.workouts}`}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="flex-row justify-center mb-3">
         <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
           Viewing {userParam ? `${user.username}'s` : 'your'} profile.
         </h2>
@@ -60,7 +88,7 @@ const Profile = () => {
             <ThoughtForm />
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
