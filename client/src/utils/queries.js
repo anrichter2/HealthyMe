@@ -49,11 +49,24 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      thoughts {
+      weight
+      height
+      workouts {
         _id
-        thoughtText
-        thoughtAuthor
-        createdAt
+        exerciseDate
+        exercises {
+          exerciseType
+          exerciseDuration
+          caloriesBurned
+        }
+      }
+      foodIntake {
+        _id
+        intakeDate
+        foods {
+          foodName
+          calories
+        }
       }
     }
   }

@@ -13,12 +13,12 @@ const typeDefs = `#graphql
   type Fitness {
     _id: ID
     exerciseDate: String
-    totalCalBurn: Int
+    # totalCalBurn: Int
     exercises: [Exercise]!
   }
 
   type Exercise {
-    _id: ID
+    # _id: ID
     # exerciseName: String
     exerciseType: String
     exerciseDuration: Int
@@ -28,7 +28,7 @@ const typeDefs = `#graphql
   type Nutrition {
     _id: ID
     intakeDate: String
-    totalCalIntake: Int
+    # totalCalIntake: Int
     foods: [Food]
   }
 

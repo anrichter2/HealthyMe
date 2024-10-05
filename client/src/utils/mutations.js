@@ -54,3 +54,31 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const ADD_FITNESS = gql`
+  mutation addFitness($exerciseName: String!, $exerciseType: String!, $exerciseDuration: Int!, $caloriesBurned: Int!) {
+    addFitness(exerciseName: $exerciseName, exerciseType: $exerciseType, exerciseDuration: $exerciseDuration, caloriesBurned: $caloriesBurned) {
+      _id
+      exerciseDate
+      exercises {
+        exerciseType
+        exerciseDuration
+        caloriesBurned
+      }
+    }
+  }
+`;
+
+export const ADD_EXERCISE = gql`
+  mutation AddExercise($fitnessId: ID!, $exerciseName: String!, $exerciseType: String!, $exerciseDuration: Int!, $caloriesBurned: Int!) {
+    addExercise(fitnessId: $fitnessId, exerciseName: $exerciseName, exerciseType: $exerciseType, exerciseDuration: $exerciseDuration, caloriesBurned: $caloriesBurned) {
+      _id
+      exerciseDate
+      exercises {
+        caloriesBurned
+        exerciseDuration
+        exerciseType
+      }
+    }
+  }
+`;

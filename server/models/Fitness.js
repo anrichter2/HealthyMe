@@ -16,15 +16,15 @@ const exerciseSchema = new Schema({
         maxlength: 280,
         trim: true,
       },
-    exerciseDuration: {
-      type: Number,
-      required: true,
-    },
-    caloriesBurned: {
-      type: Number,
-    },
-  }
-],
+      exerciseDuration: {
+        type: Number,
+        required: true,
+      },
+      caloriesBurned: {
+        type: Number,
+      },
+    }
+  ],
 });
 
 // FIX THIS TO DISPLAY EXERCISE ARRAY AND TOTAL CALORIES BURNED
