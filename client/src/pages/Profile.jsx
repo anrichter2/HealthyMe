@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 
 import ThoughtForm from '../components/ThoughtForm';
 import ThoughtList from '../components/ThoughtList';
+import FitnessForm from '../components/FitnessForm';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
@@ -45,12 +46,12 @@ const Profile = () => {
         This is {`${user.usernames}`} Profile Page
       </h2>
       <div>
-        <LineGraph />
-        <LineGraph />
+        {/* <LineGraph />
+        <LineGraph /> */}
       </div>
       <div>
-        <FitnessForm />
-        <FoodForm />
+        <FitnessForm workouts={user.workouts}/>
+        {/* <FoodForm /> */}
       </div>
       <div>
         <div>
