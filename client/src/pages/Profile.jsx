@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 // import ThoughtList from '../components/ThoughtList';
 import FitnessForm from '../components/FitnessForm';
 import FoodForm from '../components/FoodForm';
+import FitnessList from '../components/FitnessList';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
@@ -44,7 +45,7 @@ const Profile = () => {
   return (
     <div>
       <h2>
-        This is {`${user.usernames}`} Profile Page
+        This is {user.usernames}'s Profile Page
       </h2>
       <div>
         {/* <LineGraph />
@@ -57,40 +58,13 @@ const Profile = () => {
       <div>
         <div>
           <div>
+            <h3>
+              Workout Data for {user.userName}
+            </h3>
             <FitnessList workouts={user.workouts} />
-            <div>
-              {workouts.map((workout) => (
-                <div key={workout._id} className='card'></div>
-              ))}
-              <h3>
-                Data from {`${user.workouts}`}
-              </h3>
-            </div>
           </div>
         </div>
       </div>
-      {/* <div className="flex-row justify-center mb-3">
-        <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-        </h2>
-
-        <div className="col-12 col-md-10 mb-5">
-          <ThoughtList
-            thoughts={user.thoughts}
-            title={`${user.username}'s thoughts...`}
-            showTitle={false}
-            showUsername={false}
-          />
-        </div>
-        {!userParam && (
-          <div
-            className="col-12 col-md-10 mb-3 p-3"
-            style={{ border: '1px dotted #1a1a1a' }}
-          >
-            <ThoughtForm />
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };

@@ -21,7 +21,7 @@ const FitnessForm = ({workouts}) => {
         if (!exerciseDuration || !date) {
             setErrorMessage('An exercise duration and date must be included')
         };
-        
+
         try {
             // Add code here for finding the calories from api fetch with variable called caloriesBurned
             const checkForDate = obj => obj.exerciseDate === date
@@ -39,9 +39,13 @@ const FitnessForm = ({workouts}) => {
                     }
                 });
             };
+
+            setExerciseType('Running');
+            setExerciseDuration('');
+            setDate(new Date())
         } catch (err) {
             console.log(err)
-        }
+        };
     };
 
     const handleInputChange = async (event) => {

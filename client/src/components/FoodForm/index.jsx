@@ -26,7 +26,7 @@ const FoodForm = ({foodIntake}) => {
         };
 
         try {
-            // Add code here for finding the calories from api fetch with variable called caloriesBurned
+            
             const checkForDate = obj => obj.intakeDate === date
             if (foodIntake.some(checkForDate)) {
                 const NutritionObject = foodIntake.find(obj => obj.intakeDate === date)
@@ -42,6 +42,12 @@ const FoodForm = ({foodIntake}) => {
                     }
                 });
             };
+
+            setFoodName('');
+            setServingSize('');
+            setCalories('');
+            setDate(new Date());
+            setErrorMessage('');
         } catch (err) {
             console.log(err)
         }
@@ -112,4 +118,4 @@ const FoodForm = ({foodIntake}) => {
     )
 };
 
-export default FitnessForm
+export default FoodForm
