@@ -10,7 +10,7 @@ const FitnessForm = ({workouts}) => {
     const [exerciseDuration, setExerciseDuration] = useState('');
     const [date, setDate] = useState(new Date());
     // const [caloriesBurned, setCaloriesBurned] = useState(0);
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [addFitness, {error1}] = useMutation(ADD_FITNESS);
     const [addExercise, {error2}] = useMutation(ADD_EXERCISE);
@@ -20,7 +20,8 @@ const FitnessForm = ({workouts}) => {
 
         if (!exerciseDuration || !date) {
             setErrorMessage('An exercise duration and date must be included')
-        }
+        };
+        
         try {
             // Add code here for finding the calories from api fetch with variable called caloriesBurned
             const checkForDate = obj => obj.exerciseDate === date
@@ -51,7 +52,7 @@ const FitnessForm = ({workouts}) => {
             setExerciseType(inputValue);
         } else if (inputType === 'exerciseDuration') {
             setExerciseDuration(inputValue)
-        }
+        };
     };
 
     return (

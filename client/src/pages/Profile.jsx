@@ -1,9 +1,10 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import ThoughtForm from '../components/ThoughtForm';
-import ThoughtList from '../components/ThoughtList';
+// import ThoughtForm from '../components/ThoughtForm';
+// import ThoughtList from '../components/ThoughtList';
 import FitnessForm from '../components/FitnessForm';
+import FoodForm from '../components/FoodForm';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
@@ -51,7 +52,7 @@ const Profile = () => {
       </div>
       <div>
         <FitnessForm workouts={user.workouts}/>
-        {/* <FoodForm /> */}
+        <FoodForm foodIntake={user.foodIntake}/>
       </div>
       <div>
         <div>

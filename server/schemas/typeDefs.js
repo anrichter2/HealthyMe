@@ -33,8 +33,9 @@ const typeDefs = `#graphql
   }
 
   type Food {
-    _id: ID
+    # _id: ID
     foodName: String
+    servingSize: Int
     calories: Int
   }
 
@@ -52,10 +53,10 @@ const typeDefs = `#graphql
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addFitness(exerciseName: String!, exerciseType: String!, exerciseDuration: Int!, caloriesBurned: Int!): Fitness
-    addNutrition(foodName: String!, calories: Int!): Nutrition
-    addExercise(fitnessId: ID!, exerciseName: String!, exerciseType: String!, exerciseDuration: Int!, caloriesBurned: Int!): Fitness
-    addFood(nutritionId: ID!, foodName: String!, calories: Int!): Nutrition
+    addFitness(exerciseDate: String!, exerciseType: String!, exerciseDuration: Int!, caloriesBurned: Int!): Fitness
+    addNutrition(intakeDate: String!, foodName: String!, servingSize: String!, calories: Int!): Nutrition
+    addExercise(fitnessId: ID!, exerciseType: String!, exerciseDuration: Int!, caloriesBurned: Int!): Fitness
+    addFood(nutritionId: ID!, foodName: String!, servingSize: String!, calories: Int!): Nutrition
     removeExercise(fitnessId: ID!, exerciseID: ID!): Fitness
     removeFood(nutritionId: ID!, foodId: ID!): Nutrition
   }
