@@ -60,43 +60,50 @@ const FitnessForm = ({workouts}) => {
     };
 
     return (
-        <div>
-            <h3>Want to add an exercise you did?</h3>
-
-            <form onSubmit={handleFormSubmit}>
-                <label>
-                    Exercise Type:
-                    <select name="exerciseType" value={exerciseType} onChange={handleInputChange}>
-                        <option value='Running'>Running</option>
-                        <option value='Weight Lifting'>Weight Lifting</option>
-                        <option value='Biking'>Biking</option>
-                        <option value='Swimming'>Swimming</option>
-                        <option value='Walking'>Walking</option>
-                    </select>
-                </label>
-                <label className="form-label">
-                    Exercise Duration:
-                    <input
-                        className="form-control"
-                        value={exerciseDuration}
-                        name="exerciseDuration"
-                        type="text"
-                        onChange={handleInputChange}
-                    />
-                </label>
-                <label>
-                    Exercise Date:
-                    <DatePicker selected={date} onChange={(date) => setDate(date)}/>
-                </label>
-                <div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+        <div className="col-12 col-md-6">
+            <div className="card">
+                <h3 className="card-header">Want to add an exercise you did?</h3>
+                <div className="card-body">
+                    <form onSubmit={handleFormSubmit} className="d-flex flex-column text">
+                        <label className="text-center">
+                            Exercise Type:
+                            <select name="exerciseType" value={exerciseType} onChange={handleInputChange}>
+                                <option value='Running'>Running</option>
+                                <option value='Weight Lifting'>Weight Lifting</option>
+                                <option value='Biking'>Biking</option>
+                                <option value='Swimming'>Swimming</option>
+                                <option value='Walking'>Walking</option>
+                            </select>
+                        </label>
+                        <label className="form-label">
+                            Exercise Duration:
+                            <input
+                                className="form-control"
+                                value={exerciseDuration}
+                                name="exerciseDuration"
+                                type="text"
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <label className="text-center">
+                            Exercise Date:
+                            <DatePicker selected={date} onChange={(date) => {
+                                setDate(date)
+                                // need to change the getter in the model and how date here is perceived so they can match
+                                console.log(date)
+                            }} />
+                        </label>
+                        <div className="text-center my-3">
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                    {errorMessage && (
+                        <div>
+                            <p>{errorMessage}</p>
+                        </div>
+                    )}
                 </div>
-            </form>
-            {errorMessage && (
-                <div>
-                    <p>{errorMessage}</p>
-                </div>
-            )}
+            </div>
         </div>
     )
 };
