@@ -1,13 +1,14 @@
 import { useQuery } from '@apollo/client';
 
-import ThoughtList from '../components/ThoughtList';
+import ExerciseList from '../components/ExerciseList';
 import ThoughtForm from '../components/ThoughtForm';
+import defaultExercises from '../test_data/exercises';
 
 import { QUERY_THOUGHTS } from '../utils/queries';
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_THOUGHTS);
-  const thoughts = data?.thoughts || [];
+  const exercises = data?.exercises || defaultExercises;
 
   return (
     <main>
@@ -22,9 +23,9 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <ThoughtList
-              thoughts={thoughts}
-              title="Some Feed for Thought(s)..."
+            <ExerciseList
+              exercises={exercises}
+              title="List of Exercises"
             />
           )}
         </div>
