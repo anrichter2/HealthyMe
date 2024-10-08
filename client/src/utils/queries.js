@@ -55,6 +55,7 @@ export const QUERY_ME = gql`
         _id
         exerciseDate
         exercises {
+          exerciseName
           exerciseType
           exerciseDuration
           caloriesBurned
@@ -65,6 +66,7 @@ export const QUERY_ME = gql`
         intakeDate
         foods {
           foodName
+          servingSize
           calories
         }
       }

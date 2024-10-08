@@ -9,6 +9,10 @@ const exerciseSchema = new Schema({
   },
   exercises: [
     {
+      exerciseName: {
+        type: String,
+        required: true,
+      },
       exerciseType: {
         type: String,
         required: true,

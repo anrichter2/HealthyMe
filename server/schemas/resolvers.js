@@ -40,14 +40,14 @@ const resolvers = {
 
       return { token, user };
     },
-    addFitness: async (parent, { exerciseDate, exerciseType, exerciseDuration, caloriesBurned }, context) => {
+    addFitness: async (parent, { exerciseName, exerciseDate, exerciseType, exerciseDuration, caloriesBurned }, context) => {
       if (context.user) {
         
         const fitness = await Fitness.create({ exerciseDate });
 
         await Fitness.findOneAndUpdate(
           {_id: fitness._id },
-          { $addToSet: { exercises: { exerciseType, exerciseDuration, caloriesBurned }}}
+          { $addToSet: { exercises: { exerciseName, exerciseType, exerciseDuration, caloriesBurned }}}
         );
 
         await User.findOneAndUpdate(
@@ -76,7 +76,7 @@ const resolvers = {
     }
     throw AuthenticationError;
   },
-  addExercise: async (parent, { fitnessId, exerciseType, exerciseDuration, caloriesBurned }, context) => {
+  addExercise: async (parent, { fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned }, context) => {
     if (context.user) {
       // const exercise = await Exercise.create({ fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned });
       
@@ -84,7 +84,7 @@ const resolvers = {
         { _id: fitnessId },
         {
           $addToSet: {
-            exercises: { exerciseType, exerciseDuration, caloriesBurned },
+            exercises: { exerciseName, exerciseType, exerciseDuration, caloriesBurned },
           },
         },
         {

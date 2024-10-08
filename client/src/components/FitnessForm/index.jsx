@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Auth from '../../utils/auth'
 
 const FitnessForm = ({workouts}) => {
+    const [exerciseName, setExerciseName] = useState('')
     const [exerciseType, setExerciseType] = useState('Running');
     const [exerciseDuration, setExerciseDuration] = useState('');
     const [date, setDate] = useState(new Date());
@@ -23,7 +24,7 @@ const FitnessForm = ({workouts}) => {
         };
 
         try {
-            // Add code here for finding the calories from api fetch with variable called caloriesBurned
+            // Add code here for finding the calories burned from api fetch with variable called caloriesBurned
             const checkForDate = obj => obj.exerciseDate === date
             if (workouts.some(checkForDate)) {
                 const fitnessObject = workouts.find(obj => obj.exerciseDate === date)
@@ -40,6 +41,7 @@ const FitnessForm = ({workouts}) => {
                 });
             };
 
+            setExerciseName('')
             setExerciseType('Running');
             setExerciseDuration('');
             setDate(new Date())
@@ -52,7 +54,9 @@ const FitnessForm = ({workouts}) => {
         const inputType = event.target.name;
         const inputValue = event.target.value;
 
-        if (inputType === 'exerciseType') {
+        if (inputType === exerciseName) {
+            setExerciseName(inputValue)
+        } else if (inputType === 'exerciseType') {
             setExerciseType(inputValue);
         } else if (inputType === 'exerciseDuration') {
             setExerciseDuration(inputValue)
@@ -65,6 +69,16 @@ const FitnessForm = ({workouts}) => {
                 <h3 className="card-header">Want to add an exercise you did?</h3>
                 <div className="card-body">
                     <form onSubmit={handleFormSubmit} className="d-flex flex-column text">
+                        <label className="form-label">
+                            Exercise Name:
+                            <input
+                                className="form-control"
+                                value={exerciseName}
+                                name="exerciseName"
+                                type="text"
+                                onChange={handleInputChange}
+                            />
+                        </label>
                         <label className="text-center">
                             Exercise Type:
                             <select name="exerciseType" value={exerciseType} onChange={handleInputChange}>

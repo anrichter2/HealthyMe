@@ -16,6 +16,10 @@ const foodSchema = new Schema({
         maxlength: 280,
         trim: true,
       },
+      servingSize: {
+        type: String,
+        required: true,
+      },
       calories: {
         type: Number,
         required: true,
