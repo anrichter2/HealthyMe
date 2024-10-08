@@ -54,7 +54,7 @@ const FitnessForm = ({workouts}) => {
         const inputType = event.target.name;
         const inputValue = event.target.value;
 
-        if (inputType === exerciseName) {
+        if (inputType === 'exerciseName') {
             setExerciseName(inputValue)
         } else if (inputType === 'exerciseType') {
             setExerciseType(inputValue);
