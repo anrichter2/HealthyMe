@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import Auth from '../../utils/auth';
+import NTXLogo from '../../assets/NTXLogo.png'
 
 const Header = () => {
   const logout = (event) => {
@@ -15,6 +16,7 @@ const Header = () => {
             <h1 className="m-0">HealthyMe</h1>
           </Link>
           <p className="m-0">Build a better version of you.</p>
+            <img src={NTXLogo} style={{ width: '200px', height: '50px' }}></img>
         </div>
         <div>
           {Auth.loggedIn() ? (
