@@ -24,7 +24,7 @@ const Footer = () => {
           >
             ❤️
           </span>{' '}
-          by the Tech Thoughts team.
+          by the HealthyMe team.
         </h4>
       </div>
     </footer>
