@@ -19,11 +19,25 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  thoughts: [
+  weight: {
+    type: Number,
+    // required: true,
+  },
+  height: {
+    type: Number,
+    // required: true,
+  },
+  workouts: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Thought',
+      ref: 'Fitness',
     },
+  ],
+  foodIntake: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Nutrition',
+    }
   ],
 });
 

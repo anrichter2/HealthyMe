@@ -54,3 +54,61 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const ADD_FITNESS = gql`
+  mutation addFitness($exerciseDate: String!, $exerciseName: String!, $exerciseType: String!, $exerciseDuration: Int!, $caloriesBurned: Int!) {
+    addFitness(exerciseDate: $exerciseDate, exerciseName: $exerciseName, exerciseType: $exerciseType, exerciseDuration: $exerciseDuration, caloriesBurned: $caloriesBurned) {
+      _id
+      exerciseDate
+      exercises {
+        exerciseName
+        exerciseType
+        exerciseDuration
+        caloriesBurned
+      }
+    }
+  }
+`;
+
+export const ADD_EXERCISE = gql`
+  mutation AddExercise($fitnessId: ID!, $exerciseName: String!, $exerciseType: String!, $exerciseDuration: Int!, $caloriesBurned: Int!) {
+    addExercise(fitnessId: $fitnessId, exerciseName: $exerciseName, exerciseType: $exerciseType, exerciseDuration: $exerciseDuration, caloriesBurned: $caloriesBurned) {
+      _id
+      exerciseDate
+      exercises {
+        caloriesBurned
+        exerciseDuration
+        exerciseType
+        exerciseName
+      }
+    }
+  }
+`;
+
+export const ADD_NUTRITION = gql`
+  mutation addFitness($intakeDate: String!, $foodName: String!, $servingSize: Int!, $calories: Int!) {
+    addFitness(intakeDate: $intakeDate, foodName: $foodName, servingSize: $servingSize, calories: $calories) {
+      _id
+      intakeDate
+      foods {
+        foodName
+        servingSize
+        calories
+      }
+    }
+  }
+`;
+
+export const ADD_FOOD = gql`
+  mutation AddExercise($nutritionId: ID!, $foodName: String!, $servingSize: String!, $calories: Int!) {
+    addExercise(nutritionId: $nutritionId, foodName: $foodName, servingSize: $servingSize, calories: $calories) {
+      _id
+      intakeDate
+      foods {
+        foodName
+        servingSize
+        calories
+      }
+    }
+  }
+`;

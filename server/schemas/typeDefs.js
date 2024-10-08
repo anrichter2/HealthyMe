@@ -4,22 +4,39 @@ const typeDefs = `#graphql
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    weight: String
+    height: String
+    workouts: [Fitness]!
+    foodIntake: [Nutrition]!
   }
 
-  type Thought {
+  type Fitness {
     _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
+    exerciseDate: String
+    # totalCalBurn: Int
+    exercises: [Exercise]!
   }
 
-  type Comment {
+  type Exercise {
+    # _id: ID
+    exerciseName: String
+    exerciseType: String
+    exerciseDuration: Int
+    caloriesBurned: Int
+  }
+
+  type Nutrition {
     _id: ID
-    commentText: String
-    commentAuthor: String
-    createdAt: String
+    intakeDate: String
+    # totalCalIntake: Int
+    foods: [Food]
+  }
+
+  type Food {
+    # _id: ID
+    foodName: String
+    servingSize: Int
+    calories: Int
   }
 
   type Auth {
@@ -28,20 +45,20 @@ const typeDefs = `#graphql
   }
 
   type Query {
-    users: [User]
-    user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(thoughtId: ID!): Thought
     me: User
+    fitness(fitnessId: String!): Fitness
+    nutrition(nutritionId: String!): Nutrition
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addThought(thoughtText: String!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addFitness(exerciseDate: String!, exerciseName: String!, exerciseType: String!, exerciseDuration: Int!, caloriesBurned: Int!): Fitness
+    addNutrition(intakeDate: String!, foodName: String!, servingSize: String!, calories: Int!): Nutrition
+    addExercise(fitnessId: ID!, exerciseName: String!, exerciseType: String!, exerciseDuration: Int!, caloriesBurned: Int!): Fitness
+    addFood(nutritionId: ID!, foodName: String!, servingSize: String!, calories: Int!): Nutrition
+    removeExercise(fitnessId: ID!, exerciseID: ID!): Fitness
+    removeFood(nutritionId: ID!, foodId: ID!): Nutrition
   }
 `;
 

@@ -1,26 +1,19 @@
-const { User, Thought } = require('../models');
+const { User, Fitness, Exercise, Nutrition, Food } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    users: async () => {
-      return User.find().populate('thoughts');
-    },
-    user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('thoughts');
-    },
-    thoughts: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Thought.find(params).sort({ createdAt: -1 });
-    },
-    thought: async (parent, { thoughtId }) => {
-      return Thought.findOne({ _id: thoughtId });
-    },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id }).populate('workouts').populate('foodIntake');
       }
       throw AuthenticationError;
+    },
+    fitness: async (parent, { fitnessId }) => {
+      return Fitness.findOne({ _id: fitnessId });
+    },
+    nutrition: async (parent, { nutritionId }) => {
+      return Nutrition.findOne({ _id: nutritionId });
     },
   },
 
@@ -47,72 +40,103 @@ const resolvers = {
 
       return { token, user };
     },
-    addThought: async (parent, { thoughtText }, context) => {
+    addFitness: async (parent, { exerciseName, exerciseDate, exerciseType, exerciseDuration, caloriesBurned }, context) => {
       if (context.user) {
-        const thought = await Thought.create({
-          thoughtText,
-          thoughtAuthor: context.user.username,
-        });
+        
+        const fitness = await Fitness.create({ exerciseDate });
+
+        await Fitness.findOneAndUpdate(
+          {_id: fitness._id },
+          { $addToSet: { exercises: { exerciseName, exerciseType, exerciseDuration, caloriesBurned }}}
+        );
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { thoughts: thought._id } }
+          { $addToSet: { workouts: fitness._id } }
         );
-
-        return thought;
+        return fitness;
       }
-      throw AuthenticationError;
-    },
-    addComment: async (parent, { thoughtId, commentText }, context) => {
-      if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
-          {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
+    throw AuthenticationError;
+  },
+  addNutrition: async (parent, { intakeDate, foodName, servingSize, calories }, context) => {
+    if (context.user) {
+      const nutrition = Nutrition.create({ intakeDate, foodName, servingSize, calories })
+      
+      await Nutrition.findOneAndUpdate(
+        { _id: nutrition._id },
+        { $addToSet: { foods: { foodName, servingSize, calories }}}
+      );
+
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { foodIntake: nutrition._id}}
+      );
+      
+      return nutrition
+    }
+    throw AuthenticationError;
+  },
+  addExercise: async (parent, { fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned }, context) => {
+    if (context.user) {
+      // const exercise = await Exercise.create({ fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned });
+      
+      return Fitness.findOneAndUpdate(
+        { _id: fitnessId },
+        {
+          $addToSet: {
+            exercises: { exerciseName, exerciseType, exerciseDuration, caloriesBurned },
           },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-      }
-      throw AuthenticationError;
-    },
-    removeThought: async (parent, { thoughtId }, context) => {
-      if (context.user) {
-        const thought = await Thought.findOneAndDelete({
-          _id: thoughtId,
-          thoughtAuthor: context.user.username,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { thoughts: thought._id } }
-        );
-
-        return thought;
-      }
-      throw AuthenticationError;
-    },
-    removeComment: async (parent, { thoughtId, commentId }, context) => {
-      if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
-          {
-            $pull: {
-              comments: {
-                _id: commentId,
-                commentAuthor: context.user.username,
-              },
-            },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      
+    }
+    throw AuthenticationError;
+  },
+  addFood: async (parent, { nutritionId, foodName, servingSize, calories }, context) => {
+    if (context.user) {
+      // const food = await Food.create({ nutritionId, foodName, calories })
+      
+      await Nutrition.findOneAndUpdate(
+        { _id: nutritionId },
+        {
+          $addToSet: {
+            foods: { foodName, servingSize, calories },
           },
-          { new: true }
-        );
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
+        return food
       }
       throw AuthenticationError;
     },
+    removeExercise: async (parent, { fitnessId, exerciseId }, context) => {
+      const exercise = await Exercise.findOneAndDelete({ fitnessId, exerciseId })
+
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $pull: { exercise: exercise._id } }
+      );
+
+      return exercise
+    },
+    removeFood: async (parent, { nutritionId, foodId }, context) => {
+      const food = await Food.findOneAndDelete({ nutritionId, foodId })
+
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $pull: { food: food._id } }
+      );
+
+      return food
+    }
   },
 };
 
