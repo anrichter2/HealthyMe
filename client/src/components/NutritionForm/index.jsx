@@ -104,7 +104,7 @@ const NutritionForm = ({foodIntake}) => {
                         </label>
                         <label className="text-center">
                             Exercise Date:
-                            <DatePicker selected={date} onChange={(date) => setDate(date.toLocaleDateString)} />
+                            <DatePicker selected={date} onChange={(date) => setDate(date.toLocaleDateString())} />
                         </label>
                         <div className="text-center my-3">
                             <button type="submit" className="btn btn-primary">Submit</button>
