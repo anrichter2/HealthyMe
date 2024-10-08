@@ -101,11 +101,7 @@ const FitnessForm = ({workouts}) => {
                         </label>
                         <label className="text-center">
                             Exercise Date:
-                            <DatePicker selected={date} onChange={(date) => {
-                                setDate(date)
-                                // need to change the getter in the model and how date here is perceived so they can match
-                                console.log(date)
-                            }} />
+                            <DatePicker selected={date} onChange={(date) => setDate(date.toLocaleDateString())} />
                         </label>
                         <div className="text-center my-3">
                             <button type="submit" className="btn btn-primary">Submit</button>

@@ -65,3 +65,15 @@ module.exports = (
 
   return formattedTimeStamp;
 };
+
+// const getDate = (timestamp) => {
+//   let timestampString = timestamp.toString();
+//   const stringArray = timestampString.split(' ');
+//   if (stringArray[2][0] === 0) {
+//     stringArray[2] = stringArray[2].slice(1)
+//   }
+//   const dateString = stringArray[0].concat(' ', stringArray[1], ' ', stringArray[2], ' ', stringArray[3]);
+//   return dateString
+// }
+
+// export default getDate
