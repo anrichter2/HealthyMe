@@ -40,17 +40,37 @@ const resolvers = {
 
       return { token, user };
     },
-    addFitness: async (parent, { exerciseName, exerciseType, exerciseDuration, caloriesBurned }, context) => {
+    addFitness: async (parent, { exerciseName, exerciseDate, exerciseType, exerciseDuration, caloriesBurned }, context) => {
       if (context.user) {
-      const fitness = await Fitness.create({ exerciseName, exerciseType, exerciseDuration, caloriesBurned })
+        
+        const fitness = await Fitness.create({ exerciseDate });
 
-      return fitness;
-    }
+        await Fitness.findOneAndUpdate(
+          {_id: fitness._id },
+          { $addToSet: { exercises: { exerciseName, exerciseType, exerciseDuration, caloriesBurned }}}
+        );
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { workouts: fitness._id } }
+        );
+        return fitness;
+      }
     throw AuthenticationError;
   },
-  addNutrition: async (parent, { foodName, calories }, context) => {
+  addNutrition: async (parent, { intakeDate, foodName, servingSize, calories }, context) => {
     if (context.user) {
-      const nutrition = Nutrition.create({ foodName, calories })
+      const nutrition = Nutrition.create({ intakeDate, foodName, servingSize, calories })
+      
+      await Nutrition.findOneAndUpdate(
+        { _id: nutrition._id },
+        { $addToSet: { foods: { foodName, servingSize, calories }}}
+      );
+
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { foodIntake: nutrition._id}}
+      );
       
       return nutrition
     }
@@ -58,25 +78,40 @@ const resolvers = {
   },
   addExercise: async (parent, { fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned }, context) => {
     if (context.user) {
-      const exercise = await Exercise.create({ fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned });
+      // const exercise = await Exercise.create({ fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned });
       
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: { exercise: exercise._id } }
+      return Fitness.findOneAndUpdate(
+        { _id: fitnessId },
+        {
+          $addToSet: {
+            exercises: { exerciseName, exerciseType, exerciseDuration, caloriesBurned },
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
       );
       
-      return exercise;
     }
     throw AuthenticationError;
   },
-  addFood: async (parent, { nutritionId, foodName, calories }, context) => {
+  addFood: async (parent, { nutritionId, foodName, servingSize, calories }, context) => {
     if (context.user) {
-      const food = await Food.create({ nutritionId, foodName, calories })
+      // const food = await Food.create({ nutritionId, foodName, calories })
       
-      await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { food: food._id } }
-        );
+      await Nutrition.findOneAndUpdate(
+        { _id: nutritionId },
+        {
+          $addToSet: {
+            foods: { foodName, servingSize, calories },
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
 
         return food
       }
