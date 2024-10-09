@@ -1,45 +1,53 @@
 import { useMutation } from "@apollo/client";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ADD_EXERCISE, ADD_FITNESS } from "../../utils/mutations";
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Auth from '../../utils/auth'
 
-const FitnessForm = ({workouts}) => {
+import { exerciseSearch } from "../utils/exerciseAPI";
+
+const FitnessForm = ({ workouts }) => {
     const [exerciseName, setExerciseName] = useState('')
     const [exerciseType, setExerciseType] = useState('Running');
     const [exerciseDuration, setExerciseDuration] = useState('');
     const [date, setDate] = useState(new Date());
-    // const [caloriesBurned, setCaloriesBurned] = useState(0);
+    const [caloriesBurned, setCaloriesBurned] = useState(0);
+    const [query, setQuery] = useState('')
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [addFitness, {error1}] = useMutation(ADD_FITNESS);
-    const [addExercise, {error2}] = useMutation(ADD_EXERCISE);
+    const [addFitness, { error1 }] = useMutation(ADD_FITNESS);
+    const [addExercise, { error2 }] = useMutation(ADD_EXERCISE);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
         if (!exerciseDuration || !date) {
             setErrorMessage('An exercise duration and date must be included')
-        };
+        }
 
         try {
             // Add code here for finding the calories burned from api fetch with variable called caloriesBurned
+
+
+            // console.log(query)
             const checkForDate = obj => obj.exerciseDate === date
             if (workouts.some(checkForDate)) {
                 const fitnessObject = workouts.find(obj => obj.exerciseDate === date)
+                console.log("------", caloriesBurned)
                 const { data } = await addExercise({
                     variables: {
-                        fitnessId: fitnessObject._id, exerciseType, exerciseDuration, caloriesBurned
+                        fitnessId: fitnessObject._id, exerciseName, exerciseType, exerciseDuration, caloriesBurned
                     }
                 });
             } else {
+                console.log('work!', caloriesBurned)
                 const { data } = await addFitness({
                     variables: {
-                        exerciseDate: date, exerciseType, exerciseDuration, caloriesBurned
+                        exerciseDate: date, exerciseName, exerciseType, exerciseDuration, caloriesBurned
                     }
                 });
-            };
+            }
 
             setExerciseName('')
             setExerciseType('Running');
@@ -47,21 +55,34 @@ const FitnessForm = ({workouts}) => {
             setDate(new Date())
         } catch (err) {
             console.log(err)
-        };
+        }
     };
 
-    const handleInputChange = async (event) => {
+    const handleInputChange = (event) => {
         const inputType = event.target.name;
         const inputValue = event.target.value;
 
+        // console.log('yay', inputType, inputValue)
         if (inputType === 'exerciseName') {
             setExerciseName(inputValue)
         } else if (inputType === 'exerciseType') {
             setExerciseType(inputValue);
         } else if (inputType === 'exerciseDuration') {
             setExerciseDuration(inputValue)
-        };
+        }
+
+
+        // console.log('-----', exerciseName, exerciseDuration)
     };
+
+    useEffect(() => { if (exerciseName && exerciseDuration !== '') setQuery(exerciseName + ' ' + exerciseDuration) }, [exerciseName, exerciseDuration])
+    useEffect(() => {
+        async function APICall() {
+            const test = await exerciseSearch(query)
+            setCaloriesBurned(test)
+        }
+        APICall()
+    }, [query])
 
     return (
         <div className="col-12 col-md-6">
@@ -101,7 +122,12 @@ const FitnessForm = ({workouts}) => {
                         </label>
                         <label className="text-center">
                             Exercise Date:
-                            <DatePicker selected={date} onChange={(date) => setDate(date.toLocaleDateString())} />
+                            <DatePicker selected={date} onChange={(date) => {
+                                const formattedDate = (date.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                                    date.getDate().toString().padStart(2, '0') + '/' +
+                                    date.getFullYear()
+                                setDate(formattedDate)
+                            }} />
                         </label>
                         <div className="text-center my-3">
                             <button type="submit" className="btn btn-primary">Submit</button>

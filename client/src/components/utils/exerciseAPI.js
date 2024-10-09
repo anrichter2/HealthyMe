@@ -1,5 +1,6 @@
 export const exerciseSearch = async (query) => {
-
+    if(query !== '') {
+        console.log('hello')
     const options = {
         method: 'POST',
         headers: {
@@ -13,7 +14,7 @@ export const exerciseSearch = async (query) => {
     }
     const response = await fetch('https://trackapi.nutritionix.com/v2/natural/exercise', options)
     const data = await response.json()
-    const caloriesBurned = data?.exercises[0].nf_calories
+    const caloriesBurned = await data?.exercises[0].nf_calories
     console.log(`Congrats! You burned ${caloriesBurned} calories!`)
     return caloriesBurned
-}
+}}
