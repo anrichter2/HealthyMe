@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import Fitness from './pages/Fitness.jsx';
 import Nutrition from './pages/Nutrition.jsx';
 import Error from './pages/Error';
+import Exercise from './pages/Exercise.jsx'
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
         path: '/profile/:nutritionId',
         element: <Nutrition />
       }
+
     ]
   }
 ])
