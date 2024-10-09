@@ -1,50 +1,33 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react"
-import { ADD_EXERCISE, ADD_FITNESS } from "../../utils/mutations";
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import Auth from '../../utils/auth'
+import { ADD_EXERCISE } from "../../utils/mutations";
 
-const FitnessForm = ({workouts}) => {
+const FitnessFormSingleDay = ({fitnessId}) => {
     const [exerciseName, setExerciseName] = useState('')
     const [exerciseType, setExerciseType] = useState('Running');
     const [exerciseDuration, setExerciseDuration] = useState('');
-    const [date, setDate] = useState(new Date());
-    // const [caloriesBurned, setCaloriesBurned] = useState(0);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [addFitness, {error1}] = useMutation(ADD_FITNESS);
     const [addExercise, {error2}] = useMutation(ADD_EXERCISE);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
-        if (!exerciseName || !exerciseDuration || !date) {
-            setErrorMessage('An exercise name, duration and date must be included')
+        if (!exerciseDuration || !exerciseName) {
+            setErrorMessage('An exercise name and duration must be included')
         };
 
         try {
             // Add code here for finding the calories burned from api fetch with variable called caloriesBurned
-            const checkForDate = obj => obj.exerciseDate === date
-            if (workouts.some(checkForDate)) {
-                const fitnessObject = workouts.find(obj => obj.exerciseDate === date)
-                const { data } = await addExercise({
-                    variables: {
-                        fitnessId: fitnessObject._id, exerciseType, exerciseDuration, caloriesBurned
-                    }
-                });
-            } else {
-                const { data } = await addFitness({
-                    variables: {
-                        exerciseDate: date, exerciseType, exerciseDuration, caloriesBurned
-                    }
-                });
-            };
+            const { data } = await addExercise({
+                variables: {
+                    fitnessId: fitnessId, exerciseName, exerciseType, exerciseDuration
+                }
+            })
 
             setExerciseName('')
             setExerciseType('Running');
             setExerciseDuration('');
-            setDate(new Date())
         } catch (err) {
             console.log(err)
         };
@@ -66,7 +49,7 @@ const FitnessForm = ({workouts}) => {
     return (
         <div className="col-12 col-md-6">
             <div className="card">
-                <h3 className="card-header">Want to add an exercise you did?</h3>
+                <h3 className="card-header">Want to add an exercise you did this day?</h3>
                 <div className="card-body">
                     <form onSubmit={handleFormSubmit} className="d-flex flex-column text">
                         <label className="form-label">
@@ -99,10 +82,6 @@ const FitnessForm = ({workouts}) => {
                                 onChange={handleInputChange}
                             />
                         </label>
-                        <label className="text-center">
-                            Exercise Date:
-                            <DatePicker selected={date} onChange={(date) => setDate(date.toLocaleDateString())} />
-                        </label>
                         <div className="text-center my-3">
                             <button type="submit" className="btn btn-primary">Submit</button>
                         </div>
@@ -115,7 +94,7 @@ const FitnessForm = ({workouts}) => {
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
-export default FitnessForm
+export default FitnessFormSingleDay

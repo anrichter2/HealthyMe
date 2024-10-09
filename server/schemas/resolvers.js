@@ -9,11 +9,15 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    fitness: async (parent, { fitnessId }) => {
-      return Fitness.findOne({ _id: fitnessId });
+    fitness: async (parent, { fitnessId }, context) => {
+      if (context.user) {
+        return Fitness.findOne({ _id: fitnessId }).populate('exercises');
+      }
     },
-    nutrition: async (parent, { nutritionId }) => {
-      return Nutrition.findOne({ _id: nutritionId });
+    nutrition: async (parent, { nutritionId }, context) => {
+      if (context.user) {
+        return Nutrition.findOne({ _id: nutritionId }).populate('foods');
+      }
     },
   },
 
