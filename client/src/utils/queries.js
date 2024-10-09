@@ -73,3 +73,32 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_FITNESS = gql`
+  query fitness($fitnessId: ID!) {
+    fitnessDay {
+      _id
+      exerciseDate
+      exercises {
+        exerciseName
+        exerciseType
+        exerciseDuration
+        caloriesBurned
+      }
+    }
+  }
+`;
+
+export const QUERY_NUTRITION = gql`
+  query nutrition($nutritionId: ID!) {
+    nutritionDay {
+      _id
+      intakeDate
+      foods {
+        foodName
+        servingSize
+        calories
+      }
+    }
+  }
+`;

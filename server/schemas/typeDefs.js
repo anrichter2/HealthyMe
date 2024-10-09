@@ -46,8 +46,8 @@ const typeDefs = `#graphql
 
   type Query {
     me: User
-    fitness(fitnessId: String!): Fitness
-    nutrition(nutritionId: String!): Nutrition
+    fitness(fitnessId: ID!): Fitness
+    nutrition(nutritionId: ID!): Nutrition
   }
 
   type Mutation {
