@@ -21,7 +21,7 @@ const exerciseSchema = new Schema({
         trim: true,
       },
       exerciseDuration: {
-        type: Number,
+        type: String,
         required: true,
       },
       caloriesBurned: {

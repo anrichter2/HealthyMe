@@ -56,7 +56,7 @@ export const ADD_COMMENT = gql`
 `;
 
 export const ADD_FITNESS = gql`
-  mutation addFitness($exerciseDate: String!, $exerciseName: String!, $exerciseType: String!, $exerciseDuration: Int!, $caloriesBurned: Int!) {
+  mutation addFitness($exerciseDate: String!, $exerciseName: String!, $exerciseType: String!, $exerciseDuration: String!, $caloriesBurned: Int!) {
     addFitness(exerciseDate: $exerciseDate, exerciseName: $exerciseName, exerciseType: $exerciseType, exerciseDuration: $exerciseDuration, caloriesBurned: $caloriesBurned) {
       _id
       exerciseDate
@@ -71,7 +71,7 @@ export const ADD_FITNESS = gql`
 `;
 
 export const ADD_EXERCISE = gql`
-  mutation AddExercise($fitnessId: ID!, $exerciseName: String!, $exerciseType: String!, $exerciseDuration: Int!, $caloriesBurned: Int!) {
+  mutation AddExercise($fitnessId: ID!, $exerciseName: String!, $exerciseType: String!, $exerciseDuration: String!, $caloriesBurned: Int!) {
     addExercise(fitnessId: $fitnessId, exerciseName: $exerciseName, exerciseType: $exerciseType, exerciseDuration: $exerciseDuration, caloriesBurned: $caloriesBurned) {
       _id
       exerciseDate
