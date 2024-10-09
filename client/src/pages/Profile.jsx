@@ -5,7 +5,7 @@ import NutritionForm from '../components/NutritionForm';
 import FitnessList from '../components/FitnessList';
 import NutritionList from '../components/NutritionList';
 
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_ME } from '../utils/queries';
 
 import Auth from '../utils/auth';
 
@@ -18,7 +18,7 @@ const Profile = () => {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
+  };
 
   if (!user?.username) {
     return (
@@ -27,7 +27,7 @@ const Profile = () => {
         sign up or log in!
       </h4>
     );
-  }
+  };
 
   return (
     <div className='flex-column'>
