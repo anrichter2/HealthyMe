@@ -64,7 +64,7 @@ const resolvers = {
   },
   addNutrition: async (parent, { intakeDate, foodName, servingSize, calories }, context) => {
     if (context.user) {
-      const nutrition = Nutrition.create({ intakeDate, foodName, servingSize, calories })
+      const nutrition = await Nutrition.create({ intakeDate })
       
       await Nutrition.findOneAndUpdate(
         { _id: nutrition._id },
@@ -100,46 +100,52 @@ const resolvers = {
     }
     throw AuthenticationError;
   },
-  addFood: async (parent, { nutritionId, foodName, servingSize, calories }, context) => {
-    if (context.user) {
-      // const food = await Food.create({ nutritionId, foodName, calories })
-      
-      await Nutrition.findOneAndUpdate(
-        { _id: nutritionId },
-        {
-          $addToSet: {
-            foods: { foodName, servingSize, calories },
-          },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
+    addFood: async (parent, { nutritionId, foodName, servingSize, calories }, context) => {
+      if (context.user) {
+        // const food = await Food.create({ nutritionId, foodName, calories })
 
-        return food
+        await Nutrition.findOneAndUpdate(
+          { _id: nutritionId },
+          {
+            $addToSet: {
+              foods: { foodName, servingSize, calories },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+
       }
       throw AuthenticationError;
     },
-    removeExercise: async (parent, { fitnessId, exerciseId }, context) => {
-      const exercise = await Exercise.findOneAndDelete({ fitnessId, exerciseId })
+    removeFitness: async (parent, { fitnessId }, context) => {
+      if (context.user) {
+        const fitness = await Fitness.findOneAndDelete({ _id: fitnessId });
 
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $pull: { exercise: exercise._id } }
-      );
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { workouts: fitness._id } }
+        );
 
-      return exercise
+        return fitness
+      }
+      throw AuthenticationError;
+
     },
-    removeFood: async (parent, { nutritionId, foodId }, context) => {
-      const food = await Food.findOneAndDelete({ nutritionId, foodId })
-
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $pull: { food: food._id } }
-      );
-
-      return food
+    removeNutrition: async (parent, { nutritionId }, context) => {
+      if (context.user) {
+        const nutrition = await Nutrition.findOneAndDelete({ _id: nutritionId })
+  
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { foodIntake: nutrition._id } }
+        );
+  
+        return nutrition
+      }
+      throw AuthenticationError
     }
   },
 };

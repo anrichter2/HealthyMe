@@ -1,30 +1,33 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react"
 import { ADD_FOOD } from "../../utils/mutations";
+import { QUERY_NUTRITION } from "../../utils/queries";
 
-const NutritionFormSingleDay = (nutritionId) => {
+const NutritionFormSingleDay = ({nutritionId}) => {
     const [foodName, setFoodName] = useState('');
     const [servingSize, setServingSize] = useState('');
     const [calories, setCalories] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [addFood, {error2}] = useMutation(ADD_FOOD);
+    const [addFood, {error2}] = useMutation(ADD_FOOD, {
+        refetchQueries: [
+            QUERY_NUTRITION,
+            'nutrition'
+        ]
+    });
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
-        if(!foodName || !servingSize) {
-            setErrorMessage('A food name, serving size and date must be included')
-        };
-
-        if (!calories) {
-            // add logic for doing api call to find calories per serving
+        if(!foodName || !calories || !servingSize) {
+            setErrorMessage('A food name, serving size and calories must be included')
         };
 
         try {
+            const totalCalories = servingSize * calories
             const { data } = await addFood({
                 variables: {
-                    nutritionId: nutritionId, foodName, servingSize, calories
+                    nutritionId: nutritionId, foodName, servingSize: parseInt(servingSize), calories: parseInt(totalCalories)
                 },
             });
 
@@ -81,7 +84,7 @@ const NutritionFormSingleDay = (nutritionId) => {
                             <input
                                 className="form-control"
                                 value={calories}
-                                name="servingSize"
+                                name="calories"
                                 type="text"
                                 onChange={handleInputChange}
                             />

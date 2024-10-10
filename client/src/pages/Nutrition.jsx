@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { QUERY_NUTRITION } from "../utils/queries";
 import NutritionFormSingleDay from "../components/NutritionFormSingleDay";
+import { useQuery } from "@apollo/client";
 
 const Nutrition = () => {
 
@@ -10,7 +11,7 @@ const Nutrition = () => {
         variables: { nutritionId: nutritionId },
     });
 
-    const nutritionData = data?.nutritionDay || {};
+    const nutritionData = data?.nutrition || {};
 
     function sumCaloriesConsumed(arr) {
         let sum = 0;
@@ -39,9 +40,9 @@ const Nutrition = () => {
                         {nutritionData.foods.map((food) => (
                             <div className="card">
                                 <div className="card-body">
-                                    <h4 className="card-title">{food.foodName}</h4>
-                                    <p className="card-text">{food.servingSize}</p>
-                                    <p className="card-text">{food.calories}</p>
+                                    <h4 className="card-title">Food Name: {food.foodName}</h4>
+                                    <p className="card-text">Serving Size: {food.servingSize}</p>
+                                    <p className="card-text">Total Calories: {food.calories}</p>
                                 </div>
                             </div>
                         ))}

@@ -3,42 +3,51 @@ import { useState } from "react"
 import { ADD_NUTRITION, ADD_FOOD } from "../../utils/mutations";
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { QUERY_ME } from "../../utils/queries";
 
-const NutritionForm = ({foodIntake}) => {
+const NutritionForm = ({ foodIntake }) => {
     const [foodName, setFoodName] = useState('');
     const [servingSize, setServingSize] = useState('');
     const [calories, setCalories] = useState('');
     const [date, setDate] = useState(new Date());
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [addNutrition, {error1}] = useMutation(ADD_NUTRITION);
-    const [addFood, {error2}] = useMutation(ADD_FOOD);
+    const [addNutrition, {error1}] = useMutation(ADD_NUTRITION, {
+        refetchQueries: [
+            QUERY_ME,
+            'me'
+        ]
+    });
+    const [addFood, {error2}] = useMutation(ADD_FOOD, {
+        refetchQueries: [
+            QUERY_ME,
+            'me'
+        ]
+    });
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
-        if(!foodName || !servingSize) {
-            setErrorMessage('A food name, serving size and date must be included')
-        };
-
-        if (!calories) {
-            // add logic for doing api call to find calories per serving
+        if(!foodName || !calories || !servingSize) {
+            setErrorMessage('A food name, serving size and calories must be included')
         };
 
         try {
-            
-            const checkForDate = obj => obj.intakeDate === date
+            const dateString = date.toLocaleDateString();
+            const checkForDate = obj => obj.intakeDate === dateString
             if (foodIntake.some(checkForDate)) {
-                const NutritionObject = foodIntake.find(obj => obj.intakeDate === date)
+                const totalCalories = servingSize * calories
+                const NutritionObject = foodIntake.find(obj => obj.intakeDate === dateString)
                 const { data } = await addFood({
                     variables: {
-                        nutritionId: NutritionObject._id, foodName, servingSize, calories
+                        nutritionId: NutritionObject._id, foodName, servingSize: parseInt(servingSize), calories: parseInt(totalCalories)
                     },
                 });
             } else {
+                const totalCalories = servingSize * calories
                 const { data } = await addNutrition({
                     variables: {
-                        intakeDate: date, foodName, servingSize, calories
+                        intakeDate: date, foodName, servingSize: parseInt(servingSize), calories: parseInt(totalCalories)
                     }
                 });
             };
@@ -97,14 +106,14 @@ const NutritionForm = ({foodIntake}) => {
                             <input
                                 className="form-control"
                                 value={calories}
-                                name="servingSize"
+                                name="calories"
                                 type="text"
                                 onChange={handleInputChange}
                             />
                         </label>
                         <label className="text-center">
                             Exercise Date:
-                            <DatePicker selected={date} onChange={(date) => setDate(date.toLocaleDateString())} />
+                            <DatePicker selected={date} onChange={(date) => setDate(date)} />
                         </label>
                         <div className="text-center my-3">
                             <button type="submit" className="btn btn-primary">Submit</button>

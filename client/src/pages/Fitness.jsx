@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { QUERY_FITNESS } from "../utils/queries";
 import FitnessFormSingleDay from "../components/FitnessFormSingleDay";
+import { useQuery } from "@apollo/client";
 
 const Fitness = () => {
 
@@ -10,7 +11,7 @@ const Fitness = () => {
         variables: { fitnessId: fitnessId },
     });
 
-    const fitnessData = data?.fitnessDay || {};
+    const fitnessData = data?.fitness || {};
 
     function sumCaloriesBurned(arr) {
         let sum = 0;
@@ -39,10 +40,10 @@ const Fitness = () => {
                         {fitnessData.exercises.map((exercise) => (
                             <div className="card">
                                 <div className="card-body">
-                                    <h4 className="card-title">{exercise.exerciseName}</h4>
-                                    <p className="card-text">{exercise.exerciseType}</p>
-                                    <p className="card-text">{exercise.exerciseDuration}</p>
-                                    <p className="card-text">{exercise.caloriesBurned}</p>
+                                    <h4 className="card-title">Exercise Name: {exercise.exerciseName}</h4>
+                                    <p className="card-text">Exercise Type: {exercise.exerciseType}</p>
+                                    <p className="card-text">Exercise Duration: {exercise.exerciseDuration}</p>
+                                    <p className="card-text">Calories Burned: {exercise.caloriesBurned}</p>
                                 </div>
                             </div>
                         ))}

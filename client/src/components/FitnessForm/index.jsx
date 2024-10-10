@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Auth from '../../utils/auth'
 
 import { exerciseSearch } from "../utils/exerciseAPI";
+import { QUERY_ME } from "../../utils/queries";
 
 const FitnessForm = ({ workouts }) => {
     const [exerciseName, setExerciseName] = useState('')
@@ -16,8 +17,18 @@ const FitnessForm = ({ workouts }) => {
     const [query, setQuery] = useState('')
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [addFitness, { error1 }] = useMutation(ADD_FITNESS);
-    const [addExercise, { error2 }] = useMutation(ADD_EXERCISE);
+    const [addFitness, { error1 }] = useMutation(ADD_FITNESS, {
+        refetchQueries: [
+            QUERY_ME,
+            'me'
+        ]
+    });
+    const [addExercise, { error2 }] = useMutation(ADD_EXERCISE, {
+        refetchQueries: [
+            QUERY_ME,
+            'me'
+        ]
+    });
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -27,21 +38,21 @@ const FitnessForm = ({ workouts }) => {
         };
 
         try {
-            // Add code here for finding the calories burned from api fetch with variable called caloriesBurned
+            
 
 
-            // console.log(query)
-            const checkForDate = obj => obj.exerciseDate === date
+            const dateString = date.toLocaleDateString();
+            const checkForDate = obj => obj.exerciseDate === dateString
             if (workouts.some(checkForDate)) {
-                const fitnessObject = workouts.find(obj => obj.exerciseDate === date)
-                console.log("------", caloriesBurned)
+                const fitnessObject = workouts.find(obj => obj.exerciseDate === dateString)
+                
                 const { data } = await addExercise({
                     variables: {
                         fitnessId: fitnessObject._id, exerciseName, exerciseType, exerciseDuration, caloriesBurned
                     }
                 });
             } else {
-                console.log('work!', caloriesBurned)
+                
                 const { data } = await addFitness({
                     variables: {
                         exerciseDate: date, exerciseName, exerciseType, exerciseDuration, caloriesBurned
@@ -62,7 +73,7 @@ const FitnessForm = ({ workouts }) => {
         const inputType = event.target.name;
         const inputValue = event.target.value;
 
-        // console.log('yay', inputType, inputValue)
+        
         if (inputType === 'exerciseName') {
             setExerciseName(inputValue)
         } else if (inputType === 'exerciseType') {
@@ -72,7 +83,7 @@ const FitnessForm = ({ workouts }) => {
         }
 
 
-        // console.log('-----', exerciseName, exerciseDuration)
+        
     };
 
     useEffect(() => { if (exerciseName && exerciseDuration !== '') setQuery(exerciseName + ' ' + exerciseDuration) }, [exerciseName, exerciseDuration])
@@ -123,10 +134,11 @@ const FitnessForm = ({ workouts }) => {
                         <label className="text-center">
                             Exercise Date:
                             <DatePicker selected={date} onChange={(date) => {
-                                const formattedDate = (date.getMonth() + 1).toString().padStart(2, '0') + '/' +
-                                    date.getDate().toString().padStart(2, '0') + '/' +
-                                    date.getFullYear()
-                                setDate(formattedDate)
+                                // const formattedDate = (date.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                                //     date.getDate().toString().padStart(2, '0') + '/' +
+                                //     date.getFullYear()
+                                // setDate(formattedDate)
+                                setDate(date)
                             }} />
                         </label>
                         <div className="text-center my-3">
