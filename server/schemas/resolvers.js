@@ -104,7 +104,7 @@ const resolvers = {
       if (context.user) {
         // const food = await Food.create({ nutritionId, foodName, calories })
 
-        await Nutrition.findOneAndUpdate(
+        return Nutrition.findOneAndUpdate(
           { _id: nutritionId },
           {
             $addToSet: {
