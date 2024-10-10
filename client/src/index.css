@@ -157,7 +157,7 @@ img {
   --bs-primary: red !important;
 }
 
-.background h1, p {
+.background h1, .background p {
   color: white;
   display: flex;
   justify-content: center;
