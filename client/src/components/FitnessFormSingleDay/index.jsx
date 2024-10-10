@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react"
 import { ADD_EXERCISE } from "../../utils/mutations";
+import { QUERY_FITNESS } from "../../utils/queries";
 
 const FitnessFormSingleDay = ({fitnessId}) => {
     const [exerciseName, setExerciseName] = useState('')
@@ -8,7 +9,12 @@ const FitnessFormSingleDay = ({fitnessId}) => {
     const [exerciseDuration, setExerciseDuration] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [addExercise, {error2}] = useMutation(ADD_EXERCISE);
+    const [addExercise, {error2}] = useMutation(ADD_EXERCISE, {
+        refetchQueries: [
+            QUERY_FITNESS,
+            'fitness'
+        ]
+    });
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -21,7 +27,7 @@ const FitnessFormSingleDay = ({fitnessId}) => {
             // Add code here for finding the calories burned from api fetch with variable called caloriesBurned
             const { data } = await addExercise({
                 variables: {
-                    fitnessId: fitnessId, exerciseName, exerciseType, exerciseDuration
+                    fitnessId: fitnessId, exerciseName, exerciseType, exerciseDuration, caloriesBurned
                 }
             })
 

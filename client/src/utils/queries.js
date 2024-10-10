@@ -76,7 +76,7 @@ export const QUERY_ME = gql`
 
 export const QUERY_FITNESS = gql`
   query fitness($fitnessId: ID!) {
-    fitnessDay {
+    fitness (fitnessId: $fitnessId) {
       _id
       exerciseDate
       exercises {
@@ -91,7 +91,7 @@ export const QUERY_FITNESS = gql`
 
 export const QUERY_NUTRITION = gql`
   query nutrition($nutritionId: ID!) {
-    nutritionDay {
+    nutrition (nutritionId: $nutritionId) {
       _id
       intakeDate
       foods {

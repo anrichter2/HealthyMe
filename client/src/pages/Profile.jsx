@@ -14,7 +14,6 @@ const Profile = () => {
   const { loading, data } = useQuery(QUERY_ME)
 
   const user = data?.me || {};
-  // console.log(user.workouts)
 
   if (loading) {
     return <div>Loading...</div>;

@@ -5,7 +5,7 @@ const foodSchema = new Schema({
   intakeDate: {
     type: Date,
     default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
+    get: (timestamp) => timestamp.toLocaleDateString(),
   },
   foods: [
     {
@@ -17,7 +17,7 @@ const foodSchema = new Schema({
         trim: true,
       },
       servingSize: {
-        type: String,
+        type: Number,
         required: true,
       },
       calories: {

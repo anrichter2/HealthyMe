@@ -5,7 +5,7 @@ const exerciseSchema = new Schema({
   exerciseDate: {
     type: Date,
     default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
+    get: (timestamp) => timestamp.toLocaleDateString(),
   },
   exercises: [
     {
