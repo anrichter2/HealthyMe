@@ -24,7 +24,7 @@ const Home = () => {
       <main>
 
         <div className="row row-cols-1 row-cols-md-3 g-6">
-          <div>
+          <div className='w-100'>
             {loading ? (
               <div>Loading...</div>
             ) : (
