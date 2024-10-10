@@ -14,10 +14,12 @@ Healthy Me is a fitness app designed for users to keep track of their diet and w
 To install the app itself you can download a copy of the code from the repo itself and to run it the code you must type in the command npm install and npm run develop. After doing that then a local version of the deployed site will pop up.
 
 ## Usage
-The main usage of this app is for users to ultilize the deployed site to be able to track their workouts and nutrition information making it easier for them to see their progress as they. When the user logs in they can add their info inside the forms and pick a date which they did them on. They can select foods and exercises from a list of them and add their account information. If the user doesn't have an account then the sign up page can be used to create an account. Here is the link to the deployed site to try our fitness app! INSERT SITE HERE
+The main usage of this app is for users to ultilize the deployed site to be able to track their workouts and nutrition information making it easier for them to see their progress as they. When the user logs in they can add their info inside the forms and pick a date which they did them on. They can select foods and exercises from a list of them and add their account information. If the user doesn't have an account then the sign up page can be used to create an account. Here is the link to the deployed site to try our fitness app! 
+- Deployed site: https://healthyme-ar5a.onrender.com/
+- Presentation slides: https://docs.google.com/presentation/d/1_aDHQ0GsP1Qk3DFYzN1NofD_UZHUZV_h4fp4LXcL584/edit#slide=id.g10c9bbfca61_0_53
 
-![Screenshot of homepage](![Screenshot (111)](https://github.com/user-attachments/assets/e2aaa21a-0fc3-4488-a2a4-4e32c10f7c78)
-![screenshot of profile page](![Screenshot (112)](https://github.com/user-attachments/assets/e086b05b-ac4a-44dd-9294-9659f5fe15f0)
+![Screenshot (111)](https://github.com/user-attachments/assets/e2aaa21a-0fc3-4488-a2a4-4e32c10f7c78)
+![Screenshot (112)](https://github.com/user-attachments/assets/e086b05b-ac4a-44dd-9294-9659f5fe15f0)
 
 ## Credits
 Collaborators:
